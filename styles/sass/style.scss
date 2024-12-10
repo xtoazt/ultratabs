@@ -52,6 +52,7 @@ $accent-800: hsl(274, 98%, 20%);
 $accent-900: hsl(274, 96%, 10%);
 $accent-950: hsl(274, 100%, 5%);
 
+$nav-height: 5rem;
 
 body {
     background-color: $background-950;
@@ -61,4 +62,44 @@ body {
 
     padding: 0;
     margin: 0;
+}
+
+header {
+    margin: 0;
+    padding: 0;
+    
+    #tabs {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        height: $nav-height;
+
+        padding-top: 1rem;
+        margin: 0;
+
+        gap: 1rem;
+
+        button {
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+
+            border: none;
+
+            padding: 1rem;
+            background-color: $secondary-900;
+            color: inherit;
+
+            margin: 0;
+        }
+    }
+}
+
+#tab-view {
+    .tab {
+        height: calc(100vh - $nav-height);
+        width: 100vw;
+    }
 }
