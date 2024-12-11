@@ -84,6 +84,25 @@ header {
         border-bottom: 0.5px solid rgba(240, 240, 240, 0.5);
         height: 15vh;
         width: 100%;
+
+        #controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            button {
+                background-color: transparent;
+                border: none;
+                outline: none;
+                color: white;
+                font: inherit;
+                font-weight: 500;
+                cursor: pointer;
+            }
+        }
+        #edit-url {
+
+        }
     }
 
     #tabs {
@@ -95,6 +114,7 @@ header {
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+        gap: 0.5rem;
 
         .tab {
             position: relative;
@@ -122,8 +142,6 @@ header {
 
 
             span {
-
-
                 font: inherit;
                 color: inherit;
                 font-weight: 500;
