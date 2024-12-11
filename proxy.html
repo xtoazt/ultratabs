@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="baremux/index.js" defer></script>
+    <script src="epoxy/index.js" defer></script>
+    <script src="uv/uv.bundle.js" defer></script>
+    <script src="uv/uv.config.js" defer></script>
+    <script src="proxy/register-sw.js" defer></script>
+    <script src="proxy/search.js" defer></script>
+    <script src="proxy/index.js" defer></script>
+
+    <!-- Support for HTTP -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+</head>
+
+<body>
+
+    <form id="uv-form">
+        <h1>Browse the Internet</h1>
+        <h1><span class="special">Freely</span></h1>
+        <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden" />
+        <input id="uv-address" type="text" placeholder="Enter URL or search Google" autofocus />
+    </form>
+</body>
+
+</html>
