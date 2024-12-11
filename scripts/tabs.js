@@ -7,7 +7,7 @@ focused = null
 
 // Page controls
 document.querySelector('#refresh').onclick = () => focused.view.contentWindow.location.reload()
-document.querySelector('#new-tab').onclick = () => addTab('ut://newtab')
+document.querySelector('#new-tab').onclick = () => addTab('google.com')
 document.querySelector('#page-back').onclick = () => focused.view.contentWindow.history.back()
 document.querySelector('#page-forward').onclick = () => focused.view.contentWindow.history.forward()
 
@@ -47,16 +47,16 @@ async function addTab(link, tab = null) {
         tab.url = link
         tab.view.onload = () => {
             tab.title = tab.view.contentWindow.document.title
-            console.log(tab.title)
             tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
+            tabList.children[tabs.indexOf(tab)].children[0].src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url)
         }
         focusTab(tab)
-        tabList.children[tabs.indexOf(tab)].children[0].src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(link)
-        
+        tabList.children[tabs.indexOf(tab)].children[0].src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url)
     }
+    
     else {
         let tab = {
-            title: 'Tab ' + (tabs.length + 1),
+            title: 'Loading...',
             url: link,
             icon: null,
             view: iframe({ class: 'tab', src: url, sandbox: 'allow-scripts allow-forms allow-same-origin' })
@@ -65,13 +65,15 @@ async function addTab(link, tab = null) {
             tab.title = tab.view.contentWindow.document.title
             console.log(tab.title)
             tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
+            tabList.children[tabs.indexOf(tab)].children[0].src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url)
+        
         }
 
         tabs.push(tab)
 
         tabList.appendChild(button(
             { onclick: () => focusTab(tab), class: 'tab' },
-            img({ src: 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(link) }),
+            img({ src: 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url) }),
             span(tab.title)
         ))
         tabView.appendChild(tab.view)
@@ -79,5 +81,4 @@ async function addTab(link, tab = null) {
     }
 }
 
-addTab('ut://newtab')
-addTab('discord.com')
+addTab('google.com')
