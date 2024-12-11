@@ -21,12 +21,14 @@ editURL.onsubmit = (e) => {
 function focusTab(tab) {
     if (focused) {
         focused.view.style.display = 'none'
+        tabList.children[tabs.indexOf(focused)].classList.remove('focused')
     }
     focused = tab
     tab.view.style.display = 'block'
 
     // Update URL bar
     editURL.elements[0].value = tab.url
+    tabList.children[tabs.indexOf(tab)].classList.add('focused')
 }
 
 /**
@@ -53,7 +55,7 @@ async function addTab(link, tab = null) {
         focusTab(tab)
         tabList.children[tabs.indexOf(tab)].children[0].src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url)
     }
-    
+
     else {
         let tab = {
             title: 'Loading...',
@@ -66,7 +68,7 @@ async function addTab(link, tab = null) {
             console.log(tab.title)
             tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
             tabList.children[tabs.indexOf(tab)].children[0].src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url)
-        
+
         }
 
         tabs.push(tab)
@@ -74,7 +76,18 @@ async function addTab(link, tab = null) {
         tabList.appendChild(button(
             { onclick: () => focusTab(tab), class: 'tab' },
             img({ src: 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url) }),
-            span(tab.title)
+            span(tab.title),
+            button({
+                onclick: () => {
+                    tabList.removeChild(tabList.children[tabs.indexOf(tab)])
+                    tabView.removeChild(tab.view)
+                    tabs.splice(tabs.indexOf(tab), 1)
+                    if (focused == tab) {
+                        if (tabs.length == 0) { addTab('google.com') }
+                        focusTab(tabs[0])
+                    }
+                }, class: 'close'
+            }, 'x')
         ))
         tabView.appendChild(tab.view)
         focusTab(tab)
