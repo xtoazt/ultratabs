@@ -231,12 +231,25 @@ header {
 
                 cursor: pointer;
 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                aspect-ratio: 1/1;
+
+                transition: 0.1s ease-in-out;
                 &:hover {
                     background-color: $focus-3;
                 }
 
-                img {
-                    height: 0.8em;
+                .close-icon {
+                    font-size: 1.2rem;
+                    color: white;
+
+                    height: 1.2rem;
+                    width: 1.2rem;
+
+                    // background-color: red;
                 }
             }
 
@@ -275,10 +288,18 @@ header {
 }
 
 
-.hover-focus1:hover:not(.focused)  {
-    background-color: $focus-1 !important;
+.hover-focus1 {
+    transition: 0.1s ease-in-out;
+
+    &:hover:not(.focused) {
+        background-color: $focus-1 !important;
+    }
 }
 
-.hover-focus2:hover:not(.focused) {
-    background-color: $focus-2 !important;
+.hover-focus2 {
+    transition: 0.1s ease-in-out;
+
+    &:hover:not(.focused) {
+        background-color: $focus-2 !important;
+    }
 }

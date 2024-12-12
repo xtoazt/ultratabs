@@ -5,6 +5,7 @@ tabView = document.querySelector('#tab-view')
 tabs = []
 focused = null
 
+
 // Page controls
 document.querySelector('#refresh').onclick = () => focused.view.contentWindow.location.reload()
 document.querySelector('#new-tab').onclick = () => addTab('google.com')
@@ -77,6 +78,10 @@ async function addTab(link, tab = null) {
 
         tabs.push(tab)
 
+        let closeIcon = document.createElement('ion-icon')
+        closeIcon.name = 'close'
+        closeIcon.className = 'close-icon'
+
         tabList.appendChild(button(
             {
                 onclick: (e) => {
@@ -97,7 +102,7 @@ async function addTab(link, tab = null) {
                         else addTab('google.com')
                     }
                 }, class: 'close'
-            }, img({ src: '/assets/close.svg' }))
+            }, closeIcon)
         ))
         tabView.appendChild(tab.view)
         focusTab(tab)
@@ -105,3 +110,4 @@ async function addTab(link, tab = null) {
 }
 
 addTab('google.com')
+
