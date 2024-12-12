@@ -52,13 +52,20 @@ async function addTab(link, tab = null) {
     if (tab) {
         tab.view.src = url
         tab.url = link
-        tab.view.onload = () => {
+        tab.view.onload = (e) => {
             tab.title = tab.view.contentWindow.document.title
             tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
-            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(tab.url)
+
+
+            let parts = e.target.contentWindow.location.pathname.slice(1).split('/')
+            let targetUrl = decodeURIComponent(__uv$config.decodeUrl(parts[parts.length - 1]))
+            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(targetUrl)
         }
         focusTab(tab)
-        tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(tab.url)
+
+        let parts = e.target.contentWindow.location.pathname.slice(1).split('/')
+        let targetUrl = decodeURIComponent(__uv$config.decodeUrl(parts[parts.length - 1]))
+        tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(targetUrl)
     }
 
     else {
@@ -68,12 +75,15 @@ async function addTab(link, tab = null) {
             icon: null,
             view: iframe({ class: 'tab', src: url, sandbox: 'allow-scripts allow-forms allow-same-origin' })
         }
-        tab.view.onload = () => {
+        tab.view.onload = (e) => {
+            let parts = e.target.contentWindow.location.pathname.slice(1).split('/')
+            let targetUrl = decodeURIComponent(__uv$config.decodeUrl(parts[parts.length - 1]))
+
             tab.title = tab.view.contentWindow.document.title
             console.log(tab.title)
             tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
-            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(tab.url)
-
+            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(targetUrl)
+            // alert('gi')
         }
 
         tabs.push(tab)
