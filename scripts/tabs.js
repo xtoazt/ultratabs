@@ -31,6 +31,10 @@ function focusTab(tab) {
     tabList.children[tabs.indexOf(tab)].classList.add('focused')
 }
 
+function getFavicon(url) {
+    return 'https://s2.googleusercontent.com/s2/favicons?sz=64&domain_url=' + encodeURIComponent(url)
+}
+
 /**
  * @param {string} link 
  */
@@ -50,10 +54,10 @@ async function addTab(link, tab = null) {
         tab.view.onload = () => {
             tab.title = tab.view.contentWindow.document.title
             tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
-            tabList.children[tabs.indexOf(tab)].children[0].src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url)
+            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(tab.url)
         }
         focusTab(tab)
-        tabList.children[tabs.indexOf(tab)].children[0].src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url)
+        tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(tab.url)
     }
 
     else {
@@ -67,7 +71,7 @@ async function addTab(link, tab = null) {
             tab.title = tab.view.contentWindow.document.title
             console.log(tab.title)
             tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
-            tabList.children[tabs.indexOf(tab)].children[0].src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url)
+            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(tab.url)
 
         }
 
@@ -78,9 +82,9 @@ async function addTab(link, tab = null) {
                 onclick: (e) => {
                     if (e.target.className == 'close') return
                     focusTab(tab)
-                }, class: 'tab'
+                }, class: 'tab hover-focus1'
             },
-            img({ src: 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url) }),
+            img({ src: getFavicon(tab.url) }),
             span(tab.title),
             button({
                 onclick: () => {
@@ -93,7 +97,7 @@ async function addTab(link, tab = null) {
                         else addTab('google.com')
                     }
                 }, class: 'close'
-            }, 'x')
+            }, img({ src: '/assets/close.svg' }))
         ))
         tabView.appendChild(tab.view)
         focusTab(tab)

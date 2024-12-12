@@ -71,6 +71,10 @@ body {
     background-image: linear-gradient(50deg, #75F0BD 0%, #BB75F0 72.9%);
 }
 
+$focus-1: rgba(226, 226, 226, 0.3);
+$focus-2: rgba(226, 226, 226, 0.5);
+$focus-3: rgba(226, 226, 226, 0.8);
+
 header {
     display: flex;
     width: 20vw;
@@ -79,13 +83,16 @@ header {
     justify-content: center;
     align-items: flex-start;
     flex-shrink: 0;
+    padding: 0;
 
     .page-data {
         border-bottom: 0.5px solid rgba(240, 240, 240, 0.5);
         height: 15vh;
         width: 100%;
+        padding: 0.5rem;
 
         #controls {
+            width: 95%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -98,10 +105,59 @@ header {
                 font: inherit;
                 font-weight: 500;
                 cursor: pointer;
+
+                img {
+                    height: 1.2rem;
+                    padding: 0.5rem;
+                    border-radius: 0.5rem;
+
+                    // &:hover {
+                    //     background-color: $focus-2;
+                    // }
+                }
+
             }
         }
-        #edit-url {
 
+        #edit-url {
+            input {
+                background-color: $focus-1;
+                border: none;
+                outline: none;
+
+                color: inherit;
+                font: inherit;
+                padding: 0.6rem;
+                box-sizing: border-box;
+                border-radius: 16px;
+
+                width: 95%;
+
+                // &:hover {
+                //     background-color: $focus-2;
+                // }
+            }
+        }
+
+        #new-tab {
+            width: 95%;
+            margin-top: 1rem;
+
+            border-radius: 16px;
+
+            background-color: $focus-1;
+
+            border: none;
+            outline: none;
+
+            color: inherit;
+            font: inherit;
+
+            padding: 0.6rem;
+
+            img {
+                height: 1.5rem;
+            }
         }
     }
 
@@ -121,9 +177,9 @@ header {
             display: flex;
             gap: 0.5rem;
 
-            width: 90%;
+            width: 95%;
 
-            border-radius: 8px;
+            border-radius: 16px;
             background: rgba(226, 226, 226, 0.0);
 
             justify-content: flex-start;
@@ -133,7 +189,7 @@ header {
 
             border: none;
             outline: none;
-            padding: 0.5rem;
+            padding: 0.6rem;
 
 
             font: inherit;
@@ -141,14 +197,21 @@ header {
             font-weight: 500;
 
 
+            img {
+                height: 1.25em;
+            }
+
             span {
                 font: inherit;
                 color: inherit;
-                font-weight: 500;
+                font-weight: 400;
 
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+
+                width: 80%;
+                text-align: left;
             }
 
 
@@ -166,25 +229,19 @@ header {
 
                 border-radius: 2rem;
 
+                cursor: pointer;
+
                 &:hover {
-                    background-color: rgba(200, 200, 200, 0.6);
+                    background-color: $focus-3;
                 }
-            }
 
-            &:hover {
-                background: rgba(226, 226, 226, 0.2);
-
-                .close {
-                    color: rgba(226, 226, 226, 0.8);
+                img {
+                    height: 0.8em;
                 }
             }
 
             &.focused {
-                background: rgba(226, 226, 226, 0.35);
-
-                .close {
-                    color: rgba(226, 226, 226, 0.8);
-                }
+                background: $focus-2;
             }
 
 
@@ -215,4 +272,13 @@ header {
 
         box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.25);
     }
+}
+
+
+.hover-focus1:hover:not(.focused)  {
+    background-color: $focus-1 !important;
+}
+
+.hover-focus2:hover:not(.focused) {
+    background-color: $focus-2 !important;
 }
