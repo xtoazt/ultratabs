@@ -74,7 +74,12 @@ async function addTab(link, tab = null) {
         tabs.push(tab)
 
         tabList.appendChild(button(
-            { onclick: () => focusTab(tab), class: 'tab' },
+            {
+                onclick: (e) => {
+                    if (e.target.className == 'close') return
+                    focusTab(tab)
+                }, class: 'tab'
+            },
             img({ src: 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + encodeURIComponent(tab.url) }),
             span(tab.title),
             button({
@@ -82,9 +87,10 @@ async function addTab(link, tab = null) {
                     tabList.removeChild(tabList.children[tabs.indexOf(tab)])
                     tabView.removeChild(tab.view)
                     tabs.splice(tabs.indexOf(tab), 1)
-                    if (focused == tab) {
-                        if (tabs.length == 0) { addTab('google.com') }
-                        focusTab(tabs[0])
+                    if (tab == focused) {
+                        focused = null
+                        if (tabs.length) focusTab(tabs[tabs.length - 1])
+                        else addTab('google.com')
                     }
                 }, class: 'close'
             }, 'x')
