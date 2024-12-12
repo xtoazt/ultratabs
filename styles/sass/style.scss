@@ -106,8 +106,8 @@ header {
                 font-weight: 500;
                 cursor: pointer;
 
-                img {
-                    height: 1.2rem;
+                .icon {
+                    font-size: 1.2rem;
                     padding: 0.5rem;
                     border-radius: 0.5rem;
 
@@ -153,10 +153,10 @@ header {
             color: inherit;
             font: inherit;
 
-            padding: 0.6rem;
+            padding: 0.2rem;
 
-            img {
-                height: 1.5rem;
+            .icon {
+                font-size: 1.5rem;
             }
         }
     }
