@@ -14,4 +14,11 @@ Yes, I know that its terrible to put the built JS files for baremux, uv, and epo
 - [x] When clicking a link, the icon doesnt update (move it to the event listner)
 - [ ] Some links font work/are blocked eg Gmail on google.com
 - [x] Slightly buggy tab closing if you do things to fast
-- [ ] Enhancement: Save tabs in localStorage
+
+# To Do
+- [ ] Save tabs in localStorage
+- [ ] Make it look more like Arc
+     - [ ] Move the new tab button
+     - [ ] Add bookmarks/pinned tabs
+     - [ ] Hide sidebar
+     - [ ] Better color

@@ -149,7 +149,6 @@ async function addTab(link) {
 
     tabView.appendChild(tab.view)
     focusTab(tab)
-    // }
 }
 
 addTab('google.com')
