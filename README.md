@@ -12,7 +12,7 @@ Yes, I know that its terrible to put the built JS files for baremux, uv, and epo
 
 # Bugs
 - [x] When clicking a link, the icon doesnt update (move it to the event listner)
-- [ ] Some links font work/are blocked eg Gmail on google.com
+- [ ] Some links don't work/are blocked (eg Gmail on google.com) (Ultraviolet bug possibly)
 - [x] Slightly buggy tab closing if you do things to fast
 
 # To Do
