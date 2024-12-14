@@ -1,113 +1,150 @@
-const { iframe, span, button, img } = van.tags
+const { span, iframe, button, img } = van.tags;
+const { tags: { "ion-icon": ionIcon } } = van;
 
-tabList = document.querySelector('#tabs')
-tabView = document.querySelector('#tab-view')
-tabs = []
-focused = null
+var tabs = [];
+var selectedTab = null;
+
+// Controls
+const pageBack = document.getElementById('page-back');
+const pageForward = document.getElementById('page-forward');
+const pageRefresh = document.getElementById('page-refresh');
+
+// URL Bar
+const urlForm = document.getElementById('url-form');
+const urlInput = document.getElementById('url-input');
+
+// New Tab Button
+const newTabButton = document.getElementById('new-tab');
+
+// Tab List
+const tabList = document.getElementById('tab-list');
+
+// Tab View
+const tabView = document.getElementById('tab-view');
+
+// Event Listeners
+pageBack.onclick = () => {
+    selectedTab.view.contentWindow.history.back()
+}
+
+pageForward.onclick = () => {
+    selectedTab.view.contentWindow.history.forward()
+}
+
+pageRefresh.onclick = () => {
+    selectedTab.view.contentWindow.location.reload()
+
+}
+
+newTabButton.onclick = () => {
+    addTab('google.com')
+}
 
 
-// Page controls
-document.querySelector('#refresh').onclick = () => focused.view.contentWindow.location.reload()
-document.querySelector('#new-tab').onclick = () => addTab('google.com')
-document.querySelector('#page-back').onclick = () => focused.view.contentWindow.history.back()
-document.querySelector('#page-forward').onclick = () => focused.view.contentWindow.history.forward()
-
-editURL = document.querySelector('#edit-url')
-editURL.onsubmit = (e) => {
+urlForm.onsubmit = async (e) => {
     e.preventDefault()
-    addTab(editURL.elements[0].value, focused)
-    editURL.elements[0].value = ''
+    selectedTab.view.src = await getUV(urlInput.value)
+}
+
+// Objects
+const tabItem = (tab) => {
+    return button(
+        {
+            onclick: (e) => {
+                if (!e.target.classList.contains('close') && !e.target.classList.contains('close-icon')) {
+
+                    focusTab(tab)
+                }
+            }, class: 'tab-item hover-focus1'
+        },
+        img({ src: getFavicon(tab.url) }),
+        span(tab.title),
+
+        button(
+            {
+                onclick: () => {
+                    tabs.splice(tabs.indexOf(tab), 1)
+
+                    if (tab == selectedTab) {
+                        selectedTab = null
+                        if (tabs.length) focusTab(tabs[tabs.length - 1])
+                        else addTab('google.com')
+                    }
+
+                    tabList.removeChild(tab.item)
+                    tabView.removeChild(tab.view)
+                    tab.item.remove()
+                    tab.view.remove()
+
+                }, class: 'close'
+            },
+            ionIcon({ name: 'close', class: 'close-icon' })
+        ))
+}
+
+const tabFrame = (tab) => {
+    return iframe({
+        class: 'tab-frame',
+        src: tab.proxiedUrl,
+        sandbox: 'allow-scripts allow-forms allow-same-origin',
+        onload: (e) => {
+            let parts = e.target.contentWindow.location.pathname.slice(1).split('/')
+            let targetUrl = decodeURIComponent(__uv$config.decodeUrl(parts[parts.length - 1]))
+
+            tab.title = tab.view.contentWindow.document.title
+            console.log(tab.title)
+            tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
+            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(targetUrl)
+
+            // Update URL bar
+            if (tab == selectedTab) {
+                urlInput.value = targetUrl
+            }
+        }
+
+    })
 }
 
 function focusTab(tab) {
-    if (focused) {
-        focused.view.style.display = 'none'
-        tabList.children[tabs.indexOf(focused)].classList.remove('focused')
+    if (selectedTab) {
+        selectedTab.view.style.display = 'none'
+        tabList.children[tabs.indexOf(selectedTab)].classList.remove('selectedTab')
     }
-    focused = tab
+    selectedTab = tab
     tab.view.style.display = 'block'
 
     // Update URL bar
-    editURL.elements[0].value = tab.url
-    tabList.children[tabs.indexOf(tab)].classList.add('focused')
+    urlInput.value = tab.url
+    tabList.children[tabs.indexOf(tab)].classList.add('selectedTab')
 }
 
 function getFavicon(url) {
     return 'https://s2.googleusercontent.com/s2/favicons?sz=64&domain_url=' + encodeURIComponent(url)
 }
 
-/**
- * @param {string} link 
- */
-async function addTab(link, tab = null) {
+async function addTab(link) {
     let url;
-    if (link.startsWith('ut://')) {
-        // system tabs
-        url = '/system/newtab.html'
-    }
-    else {
-        url = await getUV(link)
-    }
 
-    if (tab) {
-        tab.view.src = url
-        tab.url = link
-        tab.view.onload = () => {
-            tab.title = tab.view.contentWindow.document.title
-            tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
-            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(tab.url)
-        }
-        focusTab(tab)
-        tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(tab.url)
-    }
+    url = await getUV(link)
 
-    else {
-        let tab = {
-            title: 'Loading...',
-            url: link,
-            icon: null,
-            view: iframe({ class: 'tab', src: url, sandbox: 'allow-scripts allow-forms allow-same-origin' })
-        }
-        tab.view.onload = () => {
-            tab.title = tab.view.contentWindow.document.title
-            console.log(tab.title)
-            tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
-            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(tab.url)
+    let tab = {} // We aren't populating this because it needs to be passed into the tabFrame and tabItem functions
 
-        }
+    tab.title = 'Loading...'
+    tab.url = search(link)
+    tab.proxiedUrl = url
+    tab.icon = null
+    tab.view = tabFrame(tab)
+    tab.item = tabItem(tab)
 
-        tabs.push(tab)
+    tabs.push(tab)
 
-        let closeIcon = document.createElement('ion-icon')
-        closeIcon.name = 'close'
-        closeIcon.className = 'close-icon'
+    tabList.appendChild(
+        tab.item
+    )
 
-        tabList.appendChild(button(
-            {
-                onclick: (e) => {
-                    if (e.target.className == 'close') return
-                    focusTab(tab)
-                }, class: 'tab hover-focus1'
-            },
-            img({ src: getFavicon(tab.url) }),
-            span(tab.title),
-            button({
-                onclick: () => {
-                    tabList.removeChild(tabList.children[tabs.indexOf(tab)])
-                    tabView.removeChild(tab.view)
-                    tabs.splice(tabs.indexOf(tab), 1)
-                    if (tab == focused) {
-                        focused = null
-                        if (tabs.length) focusTab(tabs[tabs.length - 1])
-                        else addTab('google.com')
-                    }
-                }, class: 'close'
-            }, closeIcon)
-        ))
-        tabView.appendChild(tab.view)
-        focusTab(tab)
-    }
+    tabView.appendChild(tab.view)
+    focusTab(tab)
+    // }
 }
 
 addTab('google.com')
-
