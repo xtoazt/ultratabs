@@ -12,7 +12,8 @@ Yes, I know that its terrible to put the built JS files for baremux, uv, and epo
 
 # Bugs
 - [x] When clicking a link, the icon doesnt update (move it to the event listner)
-- [ ] Some links don't work/are blocked (eg Gmail on google.com) (Ultraviolet bug possibly)
+- [x] Some links don't work/are blocked (eg Gmail on google.com) (Ultraviolet bug possibly)
+     - [ ] Spotify login link still doesn't work (`#` href?)
 - [x] Slightly buggy tab closing if you do things to fast
 
 # To Do
@@ -22,3 +23,8 @@ Yes, I know that its terrible to put the built JS files for baremux, uv, and epo
      - [ ] Add bookmarks/pinned tabs
      - [ ] Hide sidebar
      - [ ] Better color
+- [ ] New tab page
+- [ ] Settings
+      - [ ] Tab disguise
+      - [ ] Colors
+      - [ ] Search Engine
