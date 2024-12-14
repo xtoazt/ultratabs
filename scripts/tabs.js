@@ -76,8 +76,8 @@ const tabItem = (tab) => {
 
                     tab.item.style.animation = 'slide-out-from-bottom 0.1s cubic-bezier(0.12, 0.64, 1, 1)'
                     setTimeout(() => {
-                        tab.item.remove()
                         tabList.removeChild(tab.item)
+                        tab.item.remove()
                     }, 100)
 
 
@@ -141,6 +141,20 @@ async function addTab(link) {
     tab.view = tabFrame(tab)
     tab.item = tabItem(tab)
 
+    // Fix links such as the Gmail link in the Google search page
+    tab.view.addEventListener('load', () => {
+        let links = tab.view.contentWindow.document.querySelectorAll('a')
+        links.forEach(element => {
+            element.addEventListener("click", event => {
+                let isTargetTop = event.target.target === "_top";
+                if (isTargetTop) {
+                    event.preventDefault();
+                    addTab(event.target.href);
+                }
+            });
+        })
+    })
+
     tabs.push(tab)
 
     tabList.appendChild(
@@ -149,7 +163,6 @@ async function addTab(link) {
 
     tabView.appendChild(tab.view)
     focusTab(tab)
-    // }
 }
 
 addTab('google.com')
