@@ -71,10 +71,15 @@ const tabItem = (tab) => {
                         else addTab('google.com')
                     }
 
-                    tabList.removeChild(tab.item)
                     tabView.removeChild(tab.view)
-                    tab.item.remove()
                     tab.view.remove()
+
+                    tab.item.style.animation = 'slide-out-from-bottom 0.1s cubic-bezier(0.12, 0.64, 1, 1)'
+                    setTimeout(() => {
+                        tab.item.remove()
+                        tabList.removeChild(tab.item)
+                    }, 100)
+
 
                 }, class: 'close'
             },
