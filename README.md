@@ -18,11 +18,12 @@ Yes, I know that its terrible to put the built JS files for baremux, uv, and epo
 
 # To Do
 - [ ] Save tabs in localStorage
+     - [ ] Keep it from loosing its mind when two tabs are made at once
 - [ ] Make it look more like Arc
      - [ ] Move the new tab button
      - [ ] Add bookmarks/pinned tabs
-     - [ ] Hide sidebar
-     - [ ] Better color
+     - [x] Hide sidebar
+     - [x] Better color
 - [ ] New tab page
 - [ ] Settings
       - [ ] Tab disguise

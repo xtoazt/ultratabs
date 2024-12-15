@@ -1,9 +1,16 @@
+import { getFavicon } from './utils.mjs';
+import { getUV, search } from './proxy.mjs'
+
 const { span, iframe, button, img } = van.tags;
 const { tags: { "ion-icon": ionIcon } } = van;
 
 var tabs = [];
 var selectedTab = null;
 
+// Side bar
+const sideBar = document.querySelector('header');
+
+const closeSideBar = document.getElementById('close-sidebar');
 // Controls
 const pageBack = document.getElementById('page-back');
 const pageForward = document.getElementById('page-forward');
@@ -23,6 +30,18 @@ const tabList = document.getElementById('tab-list');
 const tabView = document.getElementById('tab-view');
 
 // Event Listeners
+window.onmousemove = (e) => {
+    if (e.clientX < 50) {
+        sideBar.classList.add('hovered')
+    }
+    else {
+        sideBar.classList.remove('hovered')
+    }
+}
+
+closeSideBar.onclick = () => {
+    sideBar.classList.toggle('closed')
+}
 pageBack.onclick = () => {
     selectedTab.view.contentWindow.history.back()
 }
@@ -68,7 +87,7 @@ const tabItem = (tab) => {
                     if (tab == selectedTab) {
                         selectedTab = null
                         if (tabs.length) focusTab(tabs[tabs.length - 1])
-                        else addTab('google.com')
+                        else setTimeout(() => { addTab('google.com') }, 100)
                     }
 
                     tabView.removeChild(tab.view)
@@ -78,7 +97,7 @@ const tabItem = (tab) => {
                     setTimeout(() => {
                         tabList.removeChild(tab.item)
                         tab.item.remove()
-                    }, 100)
+                    }, 75)
 
 
                 }, class: 'close'
@@ -106,7 +125,6 @@ const tabFrame = (tab) => {
                 urlInput.value = targetUrl
             }
         }
-
     })
 }
 
@@ -121,10 +139,6 @@ function focusTab(tab) {
     // Update URL bar
     urlInput.value = tab.url
     tabList.children[tabs.indexOf(tab)].classList.add('selectedTab')
-}
-
-function getFavicon(url) {
-    return 'https://s2.googleusercontent.com/s2/favicons?sz=64&domain_url=' + encodeURIComponent(url)
 }
 
 async function addTab(link) {

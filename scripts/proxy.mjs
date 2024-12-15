@@ -1,6 +1,9 @@
+import { registerSW } from "/proxy/register-sw.mjs";
+import * as BareMux from "/proxy/baremux/index.mjs";
+
 const connection = new BareMux.BareMuxConnection("/proxy/baremux/worker.js")
 
-function search(input, template) {
+export function search(input, template) {
     try {
         return new URL(input).toString();
     } catch (err) { }
@@ -13,7 +16,7 @@ function search(input, template) {
     return template.replace("%s", encodeURIComponent(input));
 }
 
-async function getUV(input) {
+export async function getUV(input) {
     try {
         await registerSW();
     } catch (err) {
