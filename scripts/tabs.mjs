@@ -169,20 +169,6 @@ async function addTab(link) {
         })
     })
 
-    // Fix links such as the Gmail link in the Google search page
-    tab.view.addEventListener('load', () => {
-        let links = tab.view.contentWindow.document.querySelectorAll('a')
-        links.forEach(element => {
-            element.addEventListener("click", event => {
-                let isTargetTop = event.target.target === "_top";
-                if (isTargetTop) {
-                    event.preventDefault();
-                    addTab(event.target.href);
-                }
-            });
-        })
-    })
-
     tabs.push(tab)
 
     tabList.appendChild(
