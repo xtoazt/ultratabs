@@ -13,7 +13,7 @@ const swAllowedHostnames = ["localhost", "127.0.0.1"];
  * Global util
  * Used in 404.html and index.html
  */
-async function registerSW() {
+export async function registerSW() {
   if (!navigator.serviceWorker) {
     if (
       location.protocol !== "https:" &&
