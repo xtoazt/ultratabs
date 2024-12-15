@@ -41,6 +41,7 @@ window.onmousemove = (e) => {
 
 closeSideBar.onclick = () => {
     sideBar.classList.toggle('closed')
+    tabView.classList.toggle('full-width')
 }
 pageBack.onclick = () => {
     selectedTab.view.contentWindow.history.back()
