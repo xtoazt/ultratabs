@@ -1,5 +1,12 @@
-# ultratabs
-An Ultraviolet powered proxy
+<h1 align="center" style="font-size: 7rem">Ultratabs</h1>
+<p align="center">A powerful webproxy based on the Arc Browser</p>
+
+![Ultraviolet](https://img.shields.io/badge/Ultraviolet-Powered-purple?style=for-the-badge)
+![Arc](https://img.shields.io/badge/Arc-Inspired-000000?style=for-the-badge&logo=arc&logoColor=white)
+<hr>
+
+> [!IMPORTANT]  
+> This site will not function until you provide it a Wisp server. Modify this at `/scripts/proxy.mjs`. I'm working on a better way to specify the server
 
 # Commands
 To build the CSS, run 
@@ -8,24 +15,22 @@ sass styles/sass/:styles/css
 ```
 
 # Notes
-Yes, I know that its terrible to put the built JS files for baremux, uv, and epoxy in the repository, but i'm working on an easy way to build that without npm so just wait.
+Yes, I know that its terrible to put the built JS files for UV, BareMux, Epoxy, etc. It makes it easier for testing, but I will do it better soon.
 
 # Bugs
-- [x] When clicking a link, the icon doesnt update (move it to the event listner)
-- [x] Some links don't work/are blocked (eg Gmail on google.com) (Ultraviolet bug possibly)
-     - [ ] Spotify login link still doesn't work (`#` href?)
-- [x] Slightly buggy tab closing if you do things to fast
+- [ ] Spotify login doesn't work (fix: switch to scramjet + unstable libcurl)
 
 # To Do
-- [ ] Save tabs in localStorage
-     - [ ] Keep it from loosing its mind when two tabs are made at once
+- [x] Save tabs in localStorage
 - [ ] Make it look more like Arc
-     - [ ] Move the new tab button
+     - [x] Move the new tab button
      - [ ] Add bookmarks/pinned tabs
      - [x] Hide sidebar
+     - [ ] Better URL bar
      - [x] Better color
-- [ ] New tab page
 - [ ] Settings
-      - [ ] Tab disguise
-      - [ ] Colors
-      - [ ] Search Engine
+     - [ ] Tab disguise
+     - [ ] Colors
+     - [ ] Search Engine
+     - [ ] Custom Wisp server
+     - [ ] Scramjet/UV, Epoxy/Libcurl, etc

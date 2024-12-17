@@ -94,13 +94,13 @@ const tabItem = (tab) => {
                     tabView.removeChild(tab.view)
                     tab.view.remove()
 
+                    localStorage.setItem('tabs', JSON.stringify(tabs.map(tab => { return tab.url })))
+
                     tab.item.style.animation = 'slide-out-from-bottom 0.1s cubic-bezier(0.12, 0.64, 1, 1)'
                     setTimeout(() => {
                         tabList.removeChild(tab.item)
                         tab.item.remove()
                     }, 75)
-
-
                 }, class: 'close'
             },
             ionIcon({ name: 'close', class: 'close-icon' })
@@ -118,6 +118,7 @@ const tabFrame = (tab) => {
 
             tab.title = tab.view.contentWindow.document.title
             console.log(tab.title)
+            tab.url = targetUrl
             tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
             tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(targetUrl)
 
@@ -125,6 +126,8 @@ const tabFrame = (tab) => {
             if (tab == selectedTab) {
                 urlInput.value = targetUrl
             }
+
+            localStorage.setItem('tabs', JSON.stringify(tabs.map(tab => { return tab.url })))
         }
     })
 }
@@ -139,6 +142,7 @@ function focusTab(tab) {
 
     // Update URL bar
     urlInput.value = tab.url
+
     tabList.children[tabs.indexOf(tab)].classList.add('selectedTab')
 }
 
@@ -180,4 +184,14 @@ async function addTab(link) {
     focusTab(tab)
 }
 
-addTab('google.com')
+let savedTabs = JSON.parse(localStorage.getItem('tabs'))
+if (savedTabs) {
+    savedTabs.forEach((tab, index) => {
+        setTimeout(() => {
+            addTab(tab)
+        }, index * 1000)
+    })
+}
+else {
+    addTab('google.com')
+}
