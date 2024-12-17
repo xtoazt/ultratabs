@@ -189,7 +189,7 @@ if (savedTabs) {
     savedTabs.forEach((tab, index) => {
         setTimeout(() => {
             addTab(tab)
-        }, index * 1000)
+        }, index * 2000)
     })
 }
 else {
