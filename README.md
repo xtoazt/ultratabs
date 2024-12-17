@@ -21,10 +21,9 @@ Yes, I know that its terrible to put the built JS files for UV, BareMux, Epoxy, 
 - [ ] Spotify login doesn't work (fix: switch to scramjet + unstable libcurl)
 
 # To Do
-- [ ] Save tabs in localStorage
-     - [ ] Keep it from absolutely going insane when I open more than 1 tab at a time
+- [x] Save tabs in localStorage
 - [ ] Make it look more like Arc
-     - [ ] Move the new tab button
+     - [x] Move the new tab button
      - [ ] Add bookmarks/pinned tabs
      - [x] Hide sidebar
      - [ ] Better URL bar
