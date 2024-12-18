@@ -24,13 +24,16 @@ export async function getUV(input) {
         errorCode.textContent = err.toString();
         throw err;
     }
-    
+
     let url = search(input, 'https://www.google.com/search?q=%s');
 
     // IMPORTANT: Change this to your Wisp server URL or else the site will not function
     // let wispUrl = "wss://your.wisp.server/wisp/"
-    if (await connection.getTransport() !== "/proxy/epoxy/index.mjs") {
-        await connection.setTransport("/proxy/epoxy/index.mjs", [{ wisp: wispUrl }]);
+    // if (await connection.getTransport() !== "/proxy/epoxy/index.mjs") {
+    //     await connection.setTransport("/proxy/epoxy/index.mjs", [{ wisp: wispUrl }]);
+    // }
+    if (await connection.getTransport() !== "/proxy/libcurl/libcurl.mjs") {
+        await connection.setTransport("/proxy/libcurl/libcurl.mjs", [{ wisp: wispUrl }]);
     }
 
     let viewUrl = __uv$config.prefix + __uv$config.encodeUrl(url);
