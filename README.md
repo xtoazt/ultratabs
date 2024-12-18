@@ -22,9 +22,10 @@ Yes, I know that its terrible to put the built JS files for UV, BareMux, Epoxy, 
 
 # To Do
 - [x] Save tabs in localStorage
+     - A little glitchy and overall I don't think its worth the pain; may be removed
 - [ ] Make it look more like Arc
      - [x] Move the new tab button
-     - [ ] Add bookmarks/pinned tabs
+     - [ ] Add bookmarks/pinned tabs (**Important!!**)
      - [x] Hide sidebar
      - [ ] Better URL bar
      - [x] Better color
@@ -34,3 +35,7 @@ Yes, I know that its terrible to put the built JS files for UV, BareMux, Epoxy, 
      - [ ] Search Engine
      - [ ] Custom Wisp server
      - [ ] Scramjet/UV, Epoxy/Libcurl, etc
+- [ ] Better tab system
+     - [ ] Drag + Drop
+     - [ ] Rename Tabs
+     - [ ] Folders
