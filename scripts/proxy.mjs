@@ -33,7 +33,7 @@ export async function getUV(input) {
     //     await connection.setTransport("/proxy/epoxy/index.mjs", [{ wisp: wispUrl }]);
     // }
     if (await connection.getTransport() !== "/proxy/libcurl/libcurl.mjs") {
-        await connection.setTransport("/proxy/libcurl/libcurl.mjs", [{ wisp: wispUrl }]);
+        await connection.setTransport("/proxy/libcurl/libcurl.mjs", [{ wisp: wss://usewaves.site/w/ }]);
     }
 
     let viewUrl = __uv$config.prefix + __uv$config.encodeUrl(url);
